@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  recipe:
+    build: .
+    # tty: true
+    volumes:
+      - .:/workspace:cached
+      - recipe:/recipe
+      # - react_modules:/app/node_modules
+    ports:
+      - 3000:3000
+volumes:
+  recipe:
