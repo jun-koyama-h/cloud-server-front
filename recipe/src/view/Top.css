@@ -1,0 +1,64 @@
+body {
+    background-image: url('/images/background.jpg'); /* 'path/to/your/image.jpg' を実際の画像のパスに置き換えてください */
+    background-size: cover; /* 画像をページ全体に広げる */
+    background-position: center; /* 画像を中央に配置 */
+    background-repeat: no-repeat; /* 画像を繰り返さない */
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0; /* ページのマージンをリセット */
+  }
+  
+  form {
+    width: 300px;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center; /* フォーム内の要素を中央に配置 */
+  }
+
+  .selectContainer {
+    margin-bottom: 20px;
+  }
+  
+  .selectContainer label {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .selectContainer select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+  }
+  
+  .fileInput {
+    margin-bottom: 20px;
+  }
+  
+  .fileInput input {
+    display: none;
+  }
+  
+  .fileInputLabel {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #4caf50;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .fileInputLabel:hover {
+    background-color: #45a049;
+  }
+  
