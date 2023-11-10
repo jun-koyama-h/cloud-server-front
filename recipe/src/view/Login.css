@@ -1,5 +1,6 @@
 /* Login.css */
 .formContainer {
+    font-family: "Arial", "メイリオ";
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,6 +23,10 @@
   }
       
   h1 {
+    text-align: center;
+    color: #333;
+  }
+  h2 {
     text-align: center;
     color: #333;
   }
