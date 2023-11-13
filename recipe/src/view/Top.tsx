@@ -7,7 +7,7 @@ const MyComponent: React.FC = () => {
   const [selectedMealOption, setSelectedMealOption] = useState<string>('');
   const [selectedDishOption, setSelectedDishOption] = useState<string>('');
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [formData, setFormData] = useState<{ image: File | null, cuisineType: string, mealType: string, dishType: string }>({ image: null, cuisine: '' });
+  const [formData, setFormData] = useState<{ image: File | null, cuisineType: string, mealType: string, dishType: string }>({ image: null, cuisineType: '', mealType: '', dishType: '' });
 
   const handleSelectCusineOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCusineOption(event.target.value);
@@ -34,6 +34,7 @@ const MyComponent: React.FC = () => {
         setImagePreview(reader.result);
       };
       reader.readAsDataURL(file);
+      setFormData({ ...formData, image: file });
     } else {
       setSelectedImage(null);
       setImagePreview('');
