@@ -46,7 +46,7 @@ const MyComponent: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const apiUrl = 'https://0nb04mo3l7.execute-api.ap-northeast-1.amazonaws.com/dev/';
+      const apiUrl = 'https://0nb04mo3l7.execute-api.ap-northeast-1.amazonaws.com/dev';
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
