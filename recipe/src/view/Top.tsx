@@ -3,38 +3,78 @@ import React, { useState } from 'react';
 import './Top.css';
 
 const MyComponent: React.FC = () => {
-  const [selectedOption1, setSelectedOption1] = useState<string>('');
-  const [selectedOption2, setSelectedOption2] = useState<string>('');
-  const [selectedOption3, setSelectedOption3] = useState<string>('');
+  const [selectedCusineOption, setSelectedCusineOption] = useState<string>('');
+  const [selectedMealOption, setSelectedMealOption] = useState<string>('');
+  const [selectedDishOption, setSelectedDishOption] = useState<string>('');
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [formData, setFormData] = useState<{ image: File | null, cuisineType: string, mealType: string, dishType: string }>({ image: null, cuisine: '' });
 
-  const handleSelectOption1 = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption1(event.target.value);
+  const handleSelectCusineOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCusineOption(event.target.value);
+    setFormData({ ...formData, cuisineType: event.target.value });
   };
 
-  const handleSelectOption2 = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption2(event.target.value);
+  const handleSelectMealOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedMealOption(event.target.value);
+    setFormData({ ...formData, mealType: event.target.value });
   };
 
-  const handleSelectOption3 = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption3(event.target.value);
+  const handleSelectDishOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedDishOption(event.target.value);
+    setFormData({ ...formData, dishType: event.target.value });
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    setSelectedImage(file || null);
+    if (file) {
+      setSelectedImage(file);
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setSelectedImage(null);
+      setImagePreview('');
+    }
+    // setSelectedImage(file || null);
+  };
+  const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>('');
+
+
+  const handleSubmit = async () => {
+    try {
+      const apiUrl = 'https://0nb04mo3l7.execute-api.ap-northeast-1.amazonaws.com/dev/';
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        console.log('APIへのリクエストが成功しました。');
+      } else {
+        console.error('APIへのリクエストが失敗しました。');
+      }
+    } catch (error) {
+      console.error('エラーが発生しました:', error);
+    }
   };
 
+
   const cuisineOptions = [
-    "American", "Asian", "British", "Caribbean", "Central Europe",
+    "", "American", "Asian", "British", "Caribbean", "Central Europe",
     "Chinese", "Eastern Europe", "French", "Indian", "Italian",
     "Japanese", "Kosher", "Mediterranean", "Mexican", "Middle Eastern",
     "Nordic", "South American", "South East Asian"
   ];
 
-  const mealOptions = ["Breakfast", "Dinner", "Lunch", "Snack", "Teatime"];
+  const mealOptions = ["", "Breakfast", "Dinner", "Lunch", "Snack", "Teatime"];
   
-  const dishOptions = ["Biscuits and cookies", "Bread", "Cereals",
+  const dishOptions = ["", "Biscuits and cookies", "Bread", "Cereals",
     "Condiments and sauces", "Desserts", "Drinks", "Main course", "Pancake",
     "Preps", "Preserve", "Salad", "Sandwiches", "Side dish", "Soup", "Starter", "Sweets"
   ];
@@ -44,7 +84,7 @@ const MyComponent: React.FC = () => {
       <form>
         <div className="selectContainer">
           <label>Cuisine Type</label>
-          <select value={selectedOption1} onChange={handleSelectOption1}>
+          <select value={selectedCusineOption} onChange={handleSelectCusineOption}>
             {cuisineOptions.map((option, index) => (
               <option key={index} value={option}>
                 {option}
@@ -55,7 +95,7 @@ const MyComponent: React.FC = () => {
 
         <div className="selectContainer">
           <label>Meal Type</label>
-          <select value={selectedOption2} onChange={handleSelectOption2}>
+          <select value={selectedMealOption} onChange={handleSelectMealOption}>
             {mealOptions.map((option, index) => (
               <option key={index} value={option}>
                 {option}
@@ -66,7 +106,7 @@ const MyComponent: React.FC = () => {
 
         <div className="selectContainer">
           <label>Dish Type</label>
-          <select value={selectedOption3} onChange={handleSelectOption3}>
+          <select value={selectedDishOption} onChange={handleSelectDishOption}>
             {dishOptions.map((option, index) => (
               <option key={index} value={option}>
                 {option}
@@ -81,6 +121,12 @@ const MyComponent: React.FC = () => {
             {selectedImage ? 'Image Selected' : 'Choose Image'}
           </label>
         </div>
+        {selectedImage && (
+        <><div>
+            <p>選択した画像のプレビュー:</p>
+            <img src={imagePreview as string} alt="プレビュー" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+          </div><button className="submitButton" onClick={handleSubmit}>送信</button></>
+      )}
       </form>
     </div>
   );

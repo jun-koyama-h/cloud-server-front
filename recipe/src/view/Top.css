@@ -61,4 +61,17 @@ body {
   .fileInputLabel:hover {
     background-color: #45a049;
   }
+
+  .submitButton {
+    background-color: #4caf50; /* ボタンの背景色 */
+    color: white; /* ボタンのテキスト色 */
+    padding: 10px 15px; /* ボタンのパディング */
+    border: none; /* ボーダーをなくす */
+    border-radius: 5px; /* ボーダーの角を丸める */
+    cursor: pointer; /* カーソルをポインタに変更 */
+  }
+  
+  .submitButton:hover {
+    background-color: #45a049; /* ホバー時の背景色 */
+  }  
   
