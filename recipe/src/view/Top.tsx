@@ -53,7 +53,10 @@ const MyComponent: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const apiUrl = 'https://0nb04mo3l7.execute-api.ap-northeast-1.amazonaws.com/dev/';
+      // グループワーク用URL
+      const apiUrl = 'https://0nb04mo3l7.execute-api.ap-northeast-1.amazonaws.com/dev';
+      // 動作確認URL
+      // const apiUrl = 'https://k85c3fsuo9.execute-api.ap-northeast-1.amazonaws.com/dev';
       // console.log(JSON.stringify(formData));
       const response = await fetch(apiUrl, {
         method: 'POST',
