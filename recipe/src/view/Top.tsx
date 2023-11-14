@@ -7,7 +7,9 @@ const MyComponent: React.FC = () => {
   const [selectedMealOption, setSelectedMealOption] = useState<string>('');
   const [selectedDishOption, setSelectedDishOption] = useState<string>('');
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [formData, setFormData] = useState<{ image: File | null, cuisineType: string, mealType: string, dishType: string }>({ image: null, cuisineType: '', mealType: '', dishType: '' });
+  const [formData, setFormData] = useState<{ image: string, cuisineType: string, mealType: string, dishType: string }>({ image: '', cuisineType: '', mealType: '', dishType: '' });
+
+  const [error, setError] = useState<string | null>(null);
 
   const handleSelectCusineOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCusineOption(event.target.value);
@@ -32,9 +34,14 @@ const MyComponent: React.FC = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result);
+        const base64String = reader.result?.toString().split(",")[1]; // base64文字列を取得
+        if (base64String) {
+          setFormData({ ...formData, image: base64String });
+        }
       };
+      
       reader.readAsDataURL(file);
-      setFormData({ ...formData, image: file });
+      // setFormData({ ...formData, image: base64String });
     } else {
       setSelectedImage(null);
       setImagePreview('');
@@ -46,7 +53,8 @@ const MyComponent: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const apiUrl = 'https://0nb04mo3l7.execute-api.ap-northeast-1.amazonaws.com/dev';
+      const apiUrl = 'https://0nb04mo3l7.execute-api.ap-northeast-1.amazonaws.com/dev/';
+      // console.log(JSON.stringify(formData));
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -59,6 +67,8 @@ const MyComponent: React.FC = () => {
         console.log('APIへのリクエストが成功しました。');
       } else {
         console.error('APIへのリクエストが失敗しました。');
+        const errorResponse = await response.json();
+        setError(`APIへのリクエストが失敗しました。${response.status}: ${errorResponse.message}`);
       }
     } catch (error) {
       console.error('エラーが発生しました:', error);
@@ -129,6 +139,7 @@ const MyComponent: React.FC = () => {
           </div><button className="submitButton" onClick={handleSubmit}>送信</button></>
       )}
       </form>
+      {error && <div className="errorContainer">{error}</div>}
     </div>
   );
 };
