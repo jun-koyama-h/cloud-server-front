@@ -1,5 +1,6 @@
 // MyComponent.tsx
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Top.css';
 
 const MyComponent: React.FC = () => {
@@ -8,8 +9,8 @@ const MyComponent: React.FC = () => {
   const [selectedDishOption, setSelectedDishOption] = useState<string>('');
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [formData, setFormData] = useState<{ image: string, cuisineType: string, mealType: string, dishType: string }>({ image: '', cuisineType: '', mealType: '', dishType: '' });
-
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleSelectCusineOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCusineOption(event.target.value);
@@ -41,17 +42,16 @@ const MyComponent: React.FC = () => {
       };
       
       reader.readAsDataURL(file);
-      // setFormData({ ...formData, image: base64String });
     } else {
       setSelectedImage(null);
       setImagePreview('');
     }
-    // setSelectedImage(file || null);
   };
   const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>('');
 
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event: { preventDefault: () => void; }) => {
+    event.preventDefault();
     try {
       // グループワーク用URL
       const apiUrl = 'https://0nb04mo3l7.execute-api.ap-northeast-1.amazonaws.com/dev';
@@ -68,6 +68,13 @@ const MyComponent: React.FC = () => {
 
       if (response.ok) {
         console.log('APIへのリクエストが成功しました。');
+        const data = await response.json();
+        const { hits } = JSON.parse(data.body);
+        if (hits && hits.length > 0) {
+          navigate('/Result', { state: { recipes: hits } });
+        } else {
+          setError('検索結果が見つかりませんでした');
+        }
       } else {
         console.error('APIへのリクエストが失敗しました。');
         const errorResponse = await response.json();
@@ -97,7 +104,7 @@ const MyComponent: React.FC = () => {
     <div className="container">
       <form>
         <div className="selectContainer">
-          <label>Cuisine Type</label>
+          <label>料理の種類</label>
           <select value={selectedCusineOption} onChange={handleSelectCusineOption}>
             {cuisineOptions.map((option, index) => (
               <option key={index} value={option}>
@@ -108,7 +115,7 @@ const MyComponent: React.FC = () => {
         </div>
 
         <div className="selectContainer">
-          <label>Meal Type</label>
+          <label>食事のタイプ ランチやディナーなど</label>
           <select value={selectedMealOption} onChange={handleSelectMealOption}>
             {mealOptions.map((option, index) => (
               <option key={index} value={option}>
@@ -119,7 +126,7 @@ const MyComponent: React.FC = () => {
         </div>
 
         <div className="selectContainer">
-          <label>Dish Type</label>
+          <label>料理の種類</label>
           <select value={selectedDishOption} onChange={handleSelectDishOption}>
             {dishOptions.map((option, index) => (
               <option key={index} value={option}>
@@ -132,14 +139,14 @@ const MyComponent: React.FC = () => {
         <div className="fileInput">
           <input type="file" id="imageInput" onChange={handleImageChange} />
           <label htmlFor="imageInput" className="fileInputLabel">
-            {selectedImage ? 'Image Selected' : 'Choose Image'}
+            {selectedImage ? '選択済みの画像' : '画像を選択してください'}
           </label>
         </div>
         {selectedImage && (
         <><div>
             <p>選択した画像のプレビュー:</p>
             <img src={imagePreview as string} alt="プレビュー" style={{ maxWidth: '100%', maxHeight: '200px' }} />
-          </div><button className="submitButton" onClick={handleSubmit}>送信</button></>
+          </div><button className="submitButton" onClick={handleSubmit}>レシピ教えて！</button></>
       )}
       </form>
       {error && <div className="errorContainer">{error}</div>}
