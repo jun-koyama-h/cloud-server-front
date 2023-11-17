@@ -85,19 +85,54 @@ const MyComponent: React.FC = () => {
     }
   };
 
-
   const cuisineOptions = [
-    "", "American", "Asian", "British", "Caribbean", "Central Europe",
-    "Chinese", "Eastern Europe", "French", "Indian", "Italian",
-    "Japanese", "Kosher", "Mediterranean", "Mexican", "Middle Eastern",
-    "Nordic", "South American", "South East Asian"
+    {value: '', label: ''},
+    {value: 'American', label: 'アメリカ料理'},
+    {value: 'Asian', label: 'アジア料理'},
+    {value: 'British', label: 'イギリス料理'},
+    {value: 'Caribbean', label: 'カリブ料理'},
+    {value: 'Central Europe', label: '中欧料理'},
+    {value: 'Chinese', label: '中華料理'},
+    {value: 'Eastern Europe', label: '東欧料理'},
+    {value: 'French', label: 'フランス料理'},
+    {value: 'Indian', label: 'インド料理'},
+    {value: 'Italian', label: 'イタリア料理'},
+    {value: 'Japanese', label: '日本料理'},
+    {value: 'Kosher', label: 'コーシャー料理'},
+    {value: 'Mediterranean', label: '地中海料理'},
+    {value: 'Mexican', label: 'メキシコ料理'},
+    {value: 'Middle Eastern', label: '中東料理'},
+    {value: 'Nordic', label: '北欧料理'},
+    {value: 'South American', label: '南米料理'},
+    {value: 'South East Asian', label: '東南アジア料理'}
+  ];
+  const mealOptions = [
+    {value: '', label: ''},
+    {value: 'Breakfast', label: '朝食'},
+    {value: 'Dinner', label: 'ディナー'},
+    {value: 'Lunch', label: 'ランチ'},
+    {value: 'Snack', label: 'おやつ'},
+    {value: 'Teatime', label: 'お茶の時間'}
   ];
 
-  const mealOptions = ["", "Breakfast", "Dinner", "Lunch", "Snack", "Teatime"];
-  
-  const dishOptions = ["", "Biscuits and cookies", "Bread", "Cereals",
-    "Condiments and sauces", "Desserts", "Drinks", "Main course", "Pancake",
-    "Preps", "Preserve", "Salad", "Sandwiches", "Side dish", "Soup", "Starter", "Sweets"
+  const dishOptions = [
+    {value: '', label: ''},
+    {value: 'Biscuits and cookies', label: 'ビスケット・クッキー'},
+    {value: 'Bread', label: 'パン'},
+    {value: 'Cereals', label: 'シリアル'},
+    {value: 'Condiments and sauces', label: '調味料・ソース'},
+    {value: 'Desserts', label: 'デザート'},
+    {value: 'Drinks', label: 'ドリンク'},
+    {value: 'Main course', label: 'メインディッシュ'},
+    {value: 'Pancake', label: 'パンケーキ'},
+    // {value: 'Preps', label: '前菜'},
+    {value: 'Preserve', label: '保存食'},
+    {value: 'Salad', label: 'サラダ'},
+    {value: 'Sandwiches', label: 'サンドイッチ'},
+    {value: 'Side dish', label: 'サイドディッシュ'},
+    {value: 'Soup', label: 'スープ'},
+    {value: 'Starter', label: '前菜'},
+    {value: 'Sweets', label: 'スイーツ'}
   ];
 
   return (
@@ -106,20 +141,20 @@ const MyComponent: React.FC = () => {
         <div className="selectContainer">
           <label>料理の種類</label>
           <select value={selectedCusineOption} onChange={handleSelectCusineOption}>
-            {cuisineOptions.map((option, index) => (
-              <option key={index} value={option}>
-                {option}
-              </option>
-            ))}
+          {cuisineOptions.map(option => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
           </select>
         </div>
 
         <div className="selectContainer">
           <label>食事のタイプ ランチやディナーなど</label>
           <select value={selectedMealOption} onChange={handleSelectMealOption}>
-            {mealOptions.map((option, index) => (
-              <option key={index} value={option}>
-                {option}
+            {mealOptions.map(option => (
+              <option key={option.value} value={option.value}>
+                {option.label}
               </option>
             ))}
           </select>
@@ -128,9 +163,9 @@ const MyComponent: React.FC = () => {
         <div className="selectContainer">
           <label>料理の種類</label>
           <select value={selectedDishOption} onChange={handleSelectDishOption}>
-            {dishOptions.map((option, index) => (
-              <option key={index} value={option}>
-                {option}
+            {dishOptions.map(option => (
+              <option key={option.value} value={option.value}>
+                {option.label}
               </option>
             ))}
           </select>
