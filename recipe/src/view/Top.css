@@ -1,8 +1,23 @@
 body {
-    background-image: url('/images/background.jpg'); /* 'path/to/your/image.jpg' を実際の画像のパスに置き換えてください */
-    background-size: cover; /* 画像をページ全体に広げる */
-    background-position: center; /* 画像を中央に配置 */
-    background-repeat: no-repeat; /* 画像を繰り返さない */
+    background-image: url('/images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+h2 {
+  text-align: center;
+  color: #333;
 }
 
 .container {
@@ -10,7 +25,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0; /* ページのマージンをリセット */
+    margin: 0;
   }
   
   form {
@@ -19,7 +34,7 @@ body {
     background-color: #f4f4f4;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center; /* フォーム内の要素を中央に配置 */
+    text-align: center;
   }
 
   .selectContainer {
@@ -32,6 +47,7 @@ body {
   }
   
   .selectContainer select {
+    font-size: 14px;
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -63,15 +79,20 @@ body {
   }
 
   .submitButton {
-    background-color: #4caf50; /* ボタンの背景色 */
-    color: white; /* ボタンのテキスト色 */
-    padding: 10px 15px; /* ボタンのパディング */
-    border: none; /* ボーダーをなくす */
-    border-radius: 5px; /* ボーダーの角を丸める */
-    cursor: pointer; /* カーソルをポインタに変更 */
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
   }
   
   .submitButton:hover {
-    background-color: #45a049; /* ホバー時の背景色 */
-  }  
+    background-color: #45a049;
+  }
+  
+  .errorContainer {
+    font-size: 16px;
+    color: red;
+  }
   

@@ -55,9 +55,6 @@ const MyComponent: React.FC = () => {
     try {
       // グループワーク用URL
       const apiUrl = 'https://0nb04mo3l7.execute-api.ap-northeast-1.amazonaws.com/dev';
-      // 動作確認URL
-      // const apiUrl = 'https://k85c3fsuo9.execute-api.ap-northeast-1.amazonaws.com/dev';
-      // console.log(JSON.stringify(formData));
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -183,8 +180,8 @@ const MyComponent: React.FC = () => {
             <img src={imagePreview as string} alt="プレビュー" style={{ maxWidth: '100%', maxHeight: '200px' }} />
           </div><button className="submitButton" onClick={handleSubmit}>レシピ教えて！</button></>
       )}
-      </form>
       {error && <div className="errorContainer">{error}</div>}
+      </form>
     </div>
   );
 };
