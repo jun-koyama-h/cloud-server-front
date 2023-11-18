@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./view/Login";
+// import Login from "./view/Login";
 import Top from "./view/Top"
 import Result from "./view/Result"
 
