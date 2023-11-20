@@ -6,6 +6,7 @@ cd recipe
 yarn add vite
 yarn add react-hook-form
 yarn add react-router-dom
+yarn add --dev @types/react-modal
 yarn add @hookform/error-message
 
 yarn run dev
