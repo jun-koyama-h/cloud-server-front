@@ -1,9 +1,12 @@
 // MyComponent.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Modal from 'react-modal';
+
 import './Top.css';
 
 const MyComponent: React.FC = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [selectedCusineOption, setSelectedCusineOption] = useState<string>('');
   const [selectedMealOption, setSelectedMealOption] = useState<string>('');
   const [selectedDishOption, setSelectedDishOption] = useState<string>('');
@@ -53,6 +56,7 @@ const MyComponent: React.FC = () => {
   const handleSubmit = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     try {
+      setLoading(true);
       // グループワーク用URL
       const apiUrl = 'https://0nb04mo3l7.execute-api.ap-northeast-1.amazonaws.com/dev';
       const response = await fetch(apiUrl, {
@@ -79,6 +83,8 @@ const MyComponent: React.FC = () => {
       }
     } catch (error) {
       console.error('エラーが発生しました:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -135,6 +141,29 @@ const MyComponent: React.FC = () => {
   return (
     <div className="container">
       <form>
+        <div>
+          <Modal
+            isOpen={loading}
+            style={{
+              overlay: {
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              },
+              content: {
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '200px',
+                height: '100px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              },
+            }}
+          >
+          {loading ? (<div className='loading-message'>検索中...</div>) : ''}
+          </Modal>
+          {/* {loading ? (<div className='loading-message'>検索中...</div>) : ''} */}
+        </div>
         <div className="selectContainer">
           <label>料理の種類</label>
           <select value={selectedCusineOption} onChange={handleSelectCusineOption}>
